@@ -2,9 +2,10 @@ require("dotenv").config();
 const express = require("express");
 const axios = require("axios");
 const supabaseAdmin = require("./db");
+const moment = require("moment");
 const app = express();
 const port = 3000;
-const jam = 3;
+const jam = 1;
 const satuan = 3600000;
 const urlSiPongi =
   "https://sipongi.menlhk.go.id/api/opsroom/indoHotspot?wilayah=IN&filterperiode=false&late=12&satelit[]=NASA-MODIS&satelit[]=NASA-SNPP&satelit[]=NASA-NOAA20&confidence[]=high&confidence[]=medium&confidence[]=low";
@@ -35,15 +36,16 @@ app.get("/", async (req, res) => {
 });
 
 app.listen(port, () => {
-  // Server akan fetchin data setiap 3 jam sekali
+  // Server akan fetchin data setiap 1 jam sekali
   setInterval(async () => {
+    console.log(`------------${moment().format("LLLL")}--------------`);
     const hotspot = await getHotspot();
     if (hotspot.length != 0) {
       addData(hotspot);
     } else {
       console.log("Data hotspot kosong");
     }
-  }, 10000);
+  }, jam * satuan);
 
   console.log(
     `Service in ${process.env.NODE_ENV} mode, Running on port ${port}`
