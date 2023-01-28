@@ -13,6 +13,8 @@ const getHotspot = async () => {
   try {
     const res = await axios.get(urlSiPongi);
     const data = res.data.features.map((v, i) => v.properties);
+    console.log(data);
+    console.log("---------END--------");
     return data;
   } catch (error) {
     console.log(error.message);
@@ -21,8 +23,8 @@ const getHotspot = async () => {
 
 const addData = async (data) => {
   try {
-    await supabaseAdmin.from("hotspot_raw_record").insert(data);
-    console.log("Data sukses di tambahkan");
+    const res = await supabaseAdmin.from("hotspot_raw_record").insert(data);
+    console.log(res);
   } catch (error) {
     console.log(error.message);
   }
@@ -36,7 +38,11 @@ app.listen(port, () => {
   // Server akan fetchin data setiap 3 jam sekali
   setInterval(async () => {
     const hotspot = await getHotspot();
-    addData(hotspot);
+    if (hotspot.length != 0) {
+      addData(hotspot);
+    } else {
+      console.log("Data hotspot kosong");
+    }
   }, 10000);
 
   console.log(
