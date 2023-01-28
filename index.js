@@ -37,7 +37,7 @@ app.listen(port, () => {
   setInterval(async () => {
     const hotspot = await getHotspot();
     addData(hotspot);
-  }, 2000);
+  }, 10000);
 
   console.log(
     `Service in ${process.env.NODE_ENV} mode, Running on port ${port}`
