@@ -45,7 +45,7 @@ app.listen(port, () => {
     } else {
       console.log("Data hotspot kosong");
     }
-  }, 5000);
+  }, jam * satuan);
 
   console.log(
     `Service in ${process.env.NODE_ENV} mode, Running on port ${port}`
