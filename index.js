@@ -5,7 +5,7 @@ const supabaseAdmin = require("./db");
 const moment = require("moment");
 const app = express();
 const port = 3000;
-const jam = 1;
+const jam = 6;
 const satuan = 3600000;
 const urlSiPongi =
   "https://sipongi.menlhk.go.id/api/opsroom/indoHotspot?wilayah=IN&filterperiode=false&late=12&satelit[]=NASA-MODIS&satelit[]=NASA-SNPP&satelit[]=NASA-NOAA20&confidence[]=high&confidence[]=medium&confidence[]=low";
