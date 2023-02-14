@@ -32,11 +32,18 @@ const addData = async (data) => {
 };
 
 app.get("/", async (req, res) => {
+  console.log(`------------${moment().format("LLLL")}--------------`);
+  const hotspot = await getHotspot();
+  if (hotspot.length != 0) {
+    addData(hotspot);
+  } else {
+    console.log("Data hotspot kosong");
+  }
   res.send("Hello World!");
 });
 
 app.listen(port, () => {
-  // Server akan fetchin data setiap 1 jam sekali
+  // Server akan fetchin data setiap 6 jam sekali
   setInterval(async () => {
     console.log(`------------${moment().format("LLLL")}--------------`);
     const hotspot = await getHotspot();
