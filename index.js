@@ -45,12 +45,12 @@ app.get("/", async (req, res) => {
 app.listen(port, () => {
   // Server akan fetchin data setiap 6 jam sekali
   setInterval(async () => {
-    console.log(`------------${moment().format("LLLL")}--------------`);
-    const hotspot = await getHotspot();
-    if (hotspot.length != 0) {
+    try {
+      console.log(`------------${moment().format("LLLL")}--------------`);
+      const hotspot = await getHotspot();
       addData(hotspot);
-    } else {
-      console.log("Data hotspot kosong");
+    } catch (error) {
+      console.error(error.message);
     }
   }, jam * satuan);
 
