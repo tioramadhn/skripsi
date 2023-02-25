@@ -4,7 +4,7 @@ const axios = require("axios");
 const supabaseAdmin = require("./db");
 const moment = require("moment");
 const app = express();
-const port = 3000;
+const port = 5000;
 const jam = 6;
 const satuan = 3600000;
 const urlSiPongi =
@@ -24,7 +24,12 @@ const getHotspot = async () => {
 
 const addData = async (data) => {
   try {
-    const res = await supabaseAdmin.from("hotspot_raw_record").insert(data);
+    const res = await supabaseAdmin.from("hotspot_raw_record_backup").insert(
+      data.map((item) => ({
+        ...item,
+        geom: `POINT(${item.long} ${item.lat})`,
+      }))
+    );
     console.log(res);
   } catch (error) {
     console.log(error.message);
